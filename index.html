@@ -255,7 +255,7 @@
                     showResult('Упс! Кнопка "Нет" решила, что лучше исчезнуть! 😅<br>Значит, остаётся только один вариант... Улыбайся! 😄', 'happy');
                 }, 300);
             } else {
-                btn.style.transform = scale(${currentScale});
+                btn.style.transform = `scale(${currentScale})`;
                 
                 // Меняем текст при уменьшении
                 const texts = [
@@ -318,7 +318,7 @@ function handleYes() {
                 const y = e.clientY - rect.top;
                 
                 if (x > rect.width / 2) {
-                    this.style.transform = scale(${currentScale}) translateX(-10px);
+                    this.style.transform = `scale(${currentScale}) translateX(-10px)`;
                 }
             }
         });
