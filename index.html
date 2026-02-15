@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Поднимаем настроение! 😊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 20px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .message {
+            color: white;
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .emoji-big {
+            font-size: 4em;
+            margin: 20px 0;
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-size: 1.3em;
+            font-weight: bold;
+            padding: 20px 40px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(67, 233, 123, 0.4);
+            transform: scale(1);
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 15px 40px rgba(67, 233, 123, 0.6);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(250, 112, 154, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-no:hover {
+            transform: scale(0.95);
+        }
+
+
+.btn-no.shrinking {
+            animation: shrink 0.5s ease forwards;
+        }
+
+        @keyframes shrink {
+            to {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+
+        .result-message {
+            margin-top: 30px;
+            font-size: 1.5em;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .result-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8em; }
+            .message { font-size: 1.1em; }
+            button { font-size: 1.1em; padding: 15px 30px; }
+            .emoji-big { font-size: 3em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-hearts" id="hearts"></div>
+    
+    <div class="container">
+        <div class="emoji-big">☀️</div>
+        <h1>Сегодня такой прекрасный день!</h1>
+        <p class="message">
+            Так что поднимаем настроение<br>
+            и улыбаемся! 😊✨
+        </p>
+        
+        <div class="buttons" id="buttonContainer">
+            <button class="btn-yes" onclick="handleYes()">
+                Хорошо 🤭
+            </button>
+            <button class="btn-no" id="noBtn" onclick="handleNo()">
+                Нет, не буду 🖕
+            </button>
+        </div>
+        
+        <div class="result-message" id="result"></div>
+    </div>
+
+    <script>
+        // Создаём плавающие сердечки
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartSymbols = ['💜', '💙', '💚', '💛', '🧡', '❤️', '🤍', '💖'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 10 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        let noClickCount = 0;
+        let currentScale = 1;
+
+        function handleNo() {
+            const btn = document.getElementById('noBtn');
+            noClickCount++;
+            
+            // Уменьшаем кнопку
+            currentScale -= 0.2;
+            
+            if (currentScale <= 0.2) {
+                // Кнопка исчезает
+                btn.style.transform = 'scale(0)';
+                btn.style.opacity = '0';
+                btn.style.pointerEvents = 'none';
+                
+                setTimeout(() => {
+                    btn.classList.add('hidden');
+                    showResult('Упс! Кнопка "Нет" решила, что лучше исчезнуть! 😅<br>Значит, остаётся только один вариант... Улыбайся! 😄', 'happy');
+                }, 300);
+            } else {
+                btn.style.transform = scale(${currentScale});
+                
+                // Меняем текст при уменьшении
+                const texts = [
+                    'Нет, не буду 🖕',
+                    'Ты уверен? 🤔',
+                    'Ну пожалуйста! 🥺',
+                    'Последний шанс! ⚠️',
+                    'Я почти исчез! 😰'
+                ];
+                if (noClickCount < texts.length) {
+                    btn.textContent = texts[noClickCount];
+                }
+            }
+        }
+
+
+function handleYes() {
+            createConfetti();
+            showResult('Отличный выбор! Твоё настроение уже улучшилось! 🎉<br>Улыбайся чаще, ведь сегодня действительно прекрасный день! ☀️', 'celebrate');
+            
+            // Скрываем кнопки
+            document.getElementById('buttonContainer').style.display = 'none';
+        }
+
+        function showResult(text, type) {
+            const result = document.getElementById('result');
+            result.innerHTML = text;
+            result.classList.add('show');
+            
+            if (type === 'celebrate') {
+                // Дополнительная анимация для празднования
+                document.querySelector('.emoji-big').textContent = '🎊';
+                document.querySelector('.emoji-big').style.animation = 'bounce 0.5s ease infinite';
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeaa7', '#dfe6e9', '#fd79a8'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 50);
+            }
+        }
+
+        // Добавляем пасхалку - кнопка "нет" убегает от курсора при наведении
+        document.getElementById('noBtn').addEventListener('mouseover', function(e) {
+            if (noClickCount >= 2 && currentScale > 0.3) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                if (x > rect.width / 2) {
+                    this.style.transform = scale(${currentScale}) translateX(-10px);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
